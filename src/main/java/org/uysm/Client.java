@@ -42,7 +42,7 @@ public class Client {
             if ("decode".equals(status)) {
                 UPDX.decodeUPDX(inPath,outPath,key);
             } else if ("generate".equals(status)) {
-                UPDX.generateUPDX(outPath,inPath,key);
+                UPDX.generateUPDX(inPath,outPath,key);
             }
 
 
