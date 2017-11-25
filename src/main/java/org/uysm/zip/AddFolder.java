@@ -44,12 +44,6 @@ public class AddFolder {
 
             while (progressMonitor.getState() == ProgressMonitor.STATE_BUSY) {
 
-//                // To get the percentage done
-//                System.out.println("Percent Done: " + progressMonitor.getPercentDone());
-//
-//                // To get the current file being processed
-//                System.out.println("File: " + progressMonitor.getFileName());
-
                 ProgressBar.printProgBar(progressMonitor.getPercentDone(),"File: " + progressMonitor.getFileName() );
 
                 switch (progressMonitor.getCurrentOperation()) {
@@ -95,8 +89,8 @@ public class AddFolder {
 
 
     public static void main(String[] args) {
-        String folderDir = "/Users/adnanrimedzo/NetbeansProjects";
-        String UDPXDir = "/Users/adnanrimedzo/IdeaProjects/udpx/src/test/java/resources/output/deneme.zip";
+        String folderDir = "/Users/adnanrimedzo/IdeaProjects/udpx/src/test/java/resources/input";
+        String UDPXDir = "/Users/adnanrimedzo/IdeaProjects/udpx/src/test/java/resources/output/test.udpx";
         String ecriptionKey = "1q2w3e4r1q2w3e4r";
         new AddFolder(folderDir, UDPXDir, ecriptionKey);
     }

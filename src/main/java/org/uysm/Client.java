@@ -1,6 +1,5 @@
 package org.uysm;
 
-import javafx.util.Pair;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
-    @Option(name = "-s", usage = "status: generate , decode")
+    @Option(name = "-s", usage = "status: generate , decode, validate")
     private String status = "generate";
 
     @Option(name = "-key", usage = "input key")
@@ -27,11 +26,15 @@ public class Client {
     private List<String> arguments = new ArrayList<String>();
 
     public static void main(String[] args) throws Exception {
-        new Client().doMain(args);
-        System.exit(0);
+        boolean result = new Client().doMain(args);
+        if (result) {
+            System.exit(0);
+        } else {
+            System.exit(-1);
+        }
     }
 
-    public void doMain(String[] args) throws Exception {
+    public boolean doMain(String[] args) throws Exception {
         CmdLineParser parser = new CmdLineParser(this);
 
         parser.setUsageWidth(80);
@@ -40,9 +43,11 @@ public class Client {
             parser.parseArgument(args);
 
             if ("decode".equals(status)) {
-                UPDX.decodeUPDX(inPath,outPath,key);
+                UPDX.decodeUPDX(inPath, outPath, key);
             } else if ("generate".equals(status)) {
-                UPDX.generateUPDX(inPath,outPath,key);
+                UPDX.generateUPDX(inPath, outPath, key);
+            } else if ("validate".equals(status)) {
+                return UPDX.validateUPDX(inPath, key);
             }
 
 
@@ -55,8 +60,10 @@ public class Client {
             parser.printUsage(System.err);
             System.err.println();
 
-            return;
+            return true;
         }
+
+        return true;
 
     }
 }
