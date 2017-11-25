@@ -1,19 +1,20 @@
 package org.uysm.updx;
 
 import net.lingala.zip4j.io.ZipInputStream;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.uysm.hash.HashCheckSum;
 import org.uysm.zip.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 
 public class UPDX {
 
     public static final String VALIDATION_HASH_FILE = "CHECK_UDPX.txt";
-    public static final String VALIDATION_HASH_FILE_DIR = "./";
 
     public final static void generateUPDX(String folderDir, String UDPXDir, String ecriptionKey) throws IOException, NoSuchAlgorithmException {
         new AddFolder(folderDir, UDPXDir, ecriptionKey);
@@ -23,6 +24,13 @@ public class UPDX {
 
     public final static void decodeUPDX(String UDPXDir, String folderDir, String ecriptionKey) {
         new Thread(() -> new ExtractAllFiles(UDPXDir, folderDir, ecriptionKey)).run();
+    }
+
+    public final static void hashList(String hashFileDir, String folderDir, String ecriptionKey) throws IOException {
+        InputStream hashList = HashCheckSum.getHashFromFolder(folderDir);
+        File hashFile = new File(hashFileDir);
+
+        FileUtils.copyInputStreamToFile(hashList, hashFile);
     }
 
     public final static boolean validateUPDX(String UDPXDir, String ecriptionKey) throws IOException, NoSuchAlgorithmException {

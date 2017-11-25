@@ -1,9 +1,0 @@
-org/uysm/zip/AppZip.class
-org/uysm/udpx/AES.class
-org/uysm/Client.class
-org/uysm/udpx/UPDXGenerator.class
-org/uysm/zip/UnZip.class
-org/uysm/udpx/AESEncrypter.class
-org/uysm/udpx/FileAssets.class
-org/uysm/udpx/UDPX.class
-org/uysm/udpx/UPDXDecoder.class

@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="udpx" />
+        <module name="updx" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="udpx" target="1.8" />
+      <module name="updx" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

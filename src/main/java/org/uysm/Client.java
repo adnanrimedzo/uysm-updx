@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
-    @Option(name = "-s", usage = "status: generate , decode, validate")
+    @Option(name = "-s", usage = "status: generate , decode, validate, hashlist")
     private String status = "generate";
 
     @Option(name = "-key", usage = "input key")
@@ -48,6 +48,8 @@ public class Client {
                 UPDX.generateUPDX(inPath, outPath, key);
             } else if ("validate".equals(status)) {
                 return UPDX.validateUPDX(inPath, key);
+            }else if ("hashlist".equals(status)) {
+                UPDX.hashList(outPath, inPath, key);
             }
 
 
