@@ -70,14 +70,14 @@ public class UPDX {
                 e.printStackTrace();
             }
 
-        }).run();
+        }).start();
 
         return addFolder.getProgressMonitor();
 
     }
 
     public final static void decodeUPDX(String UDPXDir, String folderDir, String ecriptionKey) {
-        new Thread(() -> new ExtractAllFiles(UDPXDir, folderDir, ecriptionKey)).run();
+        new Thread(() -> new ExtractAllFiles(UDPXDir, folderDir, ecriptionKey)).start();
     }
 
     public final static void hashList(String hashFileDir, String folderDir, String ecriptionKey) throws IOException {
