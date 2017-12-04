@@ -13,6 +13,8 @@ import net.lingala.zip4j.util.Zip4jConstants;
  */
 public class AddFolder {
 
+    private ProgressMonitor progressMonitor = null;
+
     public AddFolder(String folderDir, String UDPXDir, String ecriptionKey) {
 
         try {
@@ -40,47 +42,7 @@ public class AddFolder {
             zipFile.addFolder(folderDir, parameters);
 
             // Get progress monitor from ZipFile
-            ProgressMonitor progressMonitor = zipFile.getProgressMonitor();
-
-            while (progressMonitor.getState() == ProgressMonitor.STATE_BUSY) {
-
-                ProgressBar.printProgBar(progressMonitor.getPercentDone(),"File: " + progressMonitor.getFileName() );
-
-                switch (progressMonitor.getCurrentOperation()) {
-                    case ProgressMonitor.OPERATION_NONE:
-                        System.out.println("no operation being performed");
-                        break;
-                    case ProgressMonitor.OPERATION_ADD:
-                        //System.out.println("Add operation");
-                        break;
-                    case ProgressMonitor.OPERATION_EXTRACT:
-                        System.out.println("Extract operation");
-                        break;
-                    case ProgressMonitor.OPERATION_REMOVE:
-                        System.out.println("Remove operation");
-                        break;
-                    case ProgressMonitor.OPERATION_CALC_CRC:
-                        System.out.println("Calcualting CRC");
-                        break;
-                    case ProgressMonitor.OPERATION_MERGE:
-                        System.out.println("Merge operation");
-                        break;
-                    default:
-                        System.out.println("invalid operation");
-                        break;
-                }
-            }
-
-            System.out.println("Result: " + progressMonitor.getResult());
-
-            if (progressMonitor.getResult() == ProgressMonitor.RESULT_ERROR) {
-                // Any exception can be retrieved as below:
-                if (progressMonitor.getException() != null) {
-                    progressMonitor.getException().printStackTrace();
-                } else {
-                    System.err.println("An error occurred without any exception");
-                }
-            }
+            progressMonitor = zipFile.getProgressMonitor();
 
         } catch (ZipException e) {
             e.printStackTrace();
@@ -93,6 +55,10 @@ public class AddFolder {
         String UDPXDir = "/Users/adnanrimedzo/IdeaProjects/udpx/src/test/java/resources/output/test.udpx";
         String ecriptionKey = "1q2w3e4r1q2w3e4r";
         new AddFolder(folderDir, UDPXDir, ecriptionKey);
+    }
+
+    public ProgressMonitor getProgressMonitor() {
+        return progressMonitor;
     }
 
 }
