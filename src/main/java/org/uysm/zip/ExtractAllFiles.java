@@ -16,7 +16,7 @@ import net.lingala.zip4j.progress.ProgressMonitor;
  */
 public class ExtractAllFiles {
 
-    private ProgressMonitor progressMonitor = null;
+    private ProgressMonitor progressMonitor = new ProgressMonitor();
 
     public ExtractAllFiles(String UDPXDir, String folderDir, String ecriptionKey) {
         new Thread(() -> {
