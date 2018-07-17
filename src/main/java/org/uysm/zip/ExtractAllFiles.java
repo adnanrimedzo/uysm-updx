@@ -42,6 +42,8 @@ public class ExtractAllFiles {
                     FileHeader fileHeader = (FileHeader) fileHeaderList.get(i);
                     // Extract the file to the specified destination
                     zipFile.extractFile(fileHeader, folderDir);
+                    progressMonitor.setFileName(fileHeader.getFileName());
+                    progressMonitor.setState(1);
                     progressMonitor.updateWorkCompleted(fileHeader.getCompressedSize());
                 }
 
