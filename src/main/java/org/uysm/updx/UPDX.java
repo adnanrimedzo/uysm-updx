@@ -76,8 +76,9 @@ public class UPDX {
 
     }
 
-    public final static void decodeUPDX(String UDPXDir, String folderDir, String ecriptionKey) {
-        new Thread(() -> new ExtractAllFiles(UDPXDir, folderDir, ecriptionKey)).start();
+    public final static ProgressMonitor decodeUPDX(String UDPXDir, String folderDir, String ecriptionKey) {
+        ExtractAllFiles extractAllFiles = new ExtractAllFiles(UDPXDir, folderDir, ecriptionKey);
+        return extractAllFiles.getProgressMonitor();
     }
 
     public final static void hashList(String hashFileDir, String folderDir, String ecriptionKey) throws IOException {

@@ -2,7 +2,10 @@ package org.uysm.zip;
 
 public class ProgressBar {
 
-    public static void printProgBar(int percent, String message) {
+    public static void printProgBar(double percent, String message) {
+
+        percent = percent * 100.0;
+
         StringBuilder bar = new StringBuilder("[");
 
         for (int i = 0; i < 50; i++) {

@@ -6,6 +6,7 @@ import java.util.List;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
+import net.lingala.zip4j.progress.ProgressMonitor;
 
 /**
  * Demonstrates extracting all files from a zip file
@@ -15,35 +16,37 @@ import net.lingala.zip4j.model.FileHeader;
  */
 public class ExtractAllFiles {
 
-    int progressRate;
+    private ProgressMonitor progressMonitor = null;
 
     public ExtractAllFiles(String UDPXDir, String folderDir, String ecriptionKey) {
+        new Thread(() -> {
+            try {
+                // Initiate ZipFile object with the path/name of the zip file.
+                ZipFile zipFile = new ZipFile(UDPXDir);
 
-        try {
-            // Initiate ZipFile object with the path/name of the zip file.
-            ZipFile zipFile = new ZipFile(UDPXDir);
+                // Check to see if the zip file is password protected
+                if (zipFile.isEncrypted()) {
+                    // if yes, then set the password for the zip file
+                    zipFile.setPassword(ecriptionKey);
+                }
 
-            // Check to see if the zip file is password protected
-            if (zipFile.isEncrypted()) {
-                // if yes, then set the password for the zip file
-                zipFile.setPassword(ecriptionKey);
+                // Get the list of file headers from the zip file
+                List fileHeaderList = zipFile.getFileHeaders();
+
+                progressMonitor.setTotalWork(zipFile.getFile().length());
+
+                // Loop through the file headers
+                for (int i = 0; i < fileHeaderList.size(); i++) {
+                    FileHeader fileHeader = (FileHeader) fileHeaderList.get(i);
+                    // Extract the file to the specified destination
+                    zipFile.extractFile(fileHeader, folderDir);
+                    progressMonitor.updateWorkCompleted(fileHeader.getCompressedSize());
+                }
+
+            } catch (ZipException e) {
+                e.printStackTrace();
             }
-
-            // Get the list of file headers from the zip file
-            List fileHeaderList = zipFile.getFileHeaders();
-
-            // Loop through the file headers
-            for (int i = 0; i < fileHeaderList.size(); i++) {
-                FileHeader fileHeader = (FileHeader)fileHeaderList.get(i);
-                // Extract the file to the specified destination
-                zipFile.extractFile(fileHeader, folderDir);
-                progressRate = (100 * i+1) / fileHeaderList.size();
-                ProgressBar.printProgBar(progressRate, "File: " + fileHeader.getFileName());
-            }
-
-        } catch (ZipException e) {
-            e.printStackTrace();
-        }
+        }).start();
 
     }
 
@@ -54,4 +57,7 @@ public class ExtractAllFiles {
         new Thread(() -> new ExtractAllFiles(UDPXDir, folderOutDir, ecriptionKey)).run();
     }
 
+    public ProgressMonitor getProgressMonitor() {
+        return progressMonitor;
+    }
 }
