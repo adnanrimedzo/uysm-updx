@@ -21,6 +21,8 @@ public class ExtractAllFiles {
     public ExtractAllFiles(String UDPXDir, String folderDir, String ecriptionKey) {
         new Thread(() -> {
             try {
+
+                progressMonitor.setResult(1);
                 // Initiate ZipFile object with the path/name of the zip file.
                 ZipFile zipFile = new ZipFile(UDPXDir);
 
@@ -42,6 +44,8 @@ public class ExtractAllFiles {
                     zipFile.extractFile(fileHeader, folderDir);
                     progressMonitor.updateWorkCompleted(fileHeader.getCompressedSize());
                 }
+
+                progressMonitor.setResult(0);
 
             } catch (ZipException e) {
                 e.printStackTrace();
