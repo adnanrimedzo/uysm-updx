@@ -4,6 +4,7 @@ import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
+import org.uysm.fileoperation.FileOperations;
 import org.uysm.updx.UPDX;
 
 import java.util.ArrayList;
@@ -47,7 +48,8 @@ public class Client {
             } else if ("generate".equals(status)) {
                 UPDX.generateUPDX(inPath, outPath, key);
             } else if ("validate".equals(status)) {
-                return UPDX.validateUPDX(inPath, key);
+                boolean result = UPDX.validateUPDX(inPath, key);
+                FileOperations.writeLine(outPath, result ? "true" : "false");
             }else if ("hashlist".equals(status)) {
                 UPDX.hashList(outPath, inPath, key);
             }

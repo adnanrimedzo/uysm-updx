@@ -14,7 +14,7 @@ In order to setup, maven4 and jdk8 are requred.
     `java -jar updx-1.0.jar -s decode -key 1q2w3e4r1q2w3e4r -in test.updx -out ./output`
     
     2.3. Validate updx
-    `java -jar updx-1.0.jar -s validate -key 1q2w3e4r1q2w3e4r -in test.updx`
+    `java -jar updx-1.0.jar -s validate -key 1q2w3e4r1q2w3e4r -in test.updx -out ./result.txt`
     
     2.4. HashList updx
     `java -jar updx-1.0.jar -s hashlist -key 1q2w3e4r1q2w3e4r -in ./input -out hashList.txt`
