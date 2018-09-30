@@ -52,10 +52,6 @@ public class Client {
                 UPDX.hashList(outPath, inPath, key);
             }
 
-
-            if (arguments.isEmpty())
-                throw new CmdLineException(parser, "No argument is given");
-
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
             System.err.println("java SampleMain [options...] arguments...");

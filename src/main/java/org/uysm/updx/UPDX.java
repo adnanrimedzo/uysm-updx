@@ -112,7 +112,11 @@ public class UPDX {
         String folderDirExt = "/Users/adnanrimedzo/IdeaProjects/udpx/src/test/java/resources/extract";
         String UDPXDir = "/Users/adnanrimedzo/IdeaProjects/udpx/src/test/java/resources/output/test.updx";
         String ecriptionKey = "1q2w3e4r1q2w3e4r";
-        generateUPDX(folderDirIn, UDPXDir, ecriptionKey);
+        ProgressMonitor progressMonitor = generateUPDX(folderDirIn, UDPXDir, ecriptionKey);
+        while(progressMonitor.getResult() != 0){
+            System.out.println(progressMonitor.getResult());
+        }
+        System.out.println("fkhdsjfghksd");
         decodeUPDX(UDPXDir, folderDirExt, ecriptionKey);
         System.out.print(validateUPDX(UDPXDir, ecriptionKey));
     }

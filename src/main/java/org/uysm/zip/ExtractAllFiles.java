@@ -6,6 +6,7 @@ import java.util.List;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
+import net.lingala.zip4j.model.UnzipParameters;
 import net.lingala.zip4j.progress.ProgressMonitor;
 
 /**
@@ -19,12 +20,13 @@ public class ExtractAllFiles {
     private ProgressMonitor progressMonitor = new ProgressMonitor();
 
     public ExtractAllFiles(String UDPXDir, String folderDir, String ecriptionKey) {
-        new Thread(() -> {
             try {
 
                 progressMonitor.setResult(1);
                 // Initiate ZipFile object with the path/name of the zip file.
                 ZipFile zipFile = new ZipFile(UDPXDir);
+                zipFile.setRunInThread(true);
+                progressMonitor = zipFile.getProgressMonitor();
 
                 // Check to see if the zip file is password protected
                 if (zipFile.isEncrypted()) {
@@ -35,24 +37,16 @@ public class ExtractAllFiles {
                 // Get the list of file headers from the zip file
                 List fileHeaderList = zipFile.getFileHeaders();
 
-                progressMonitor.setTotalWork(zipFile.getFile().length());
-
                 // Loop through the file headers
                 for (int i = 0; i < fileHeaderList.size(); i++) {
                     FileHeader fileHeader = (FileHeader) fileHeaderList.get(i);
                     // Extract the file to the specified destination
-                    zipFile.extractFile(fileHeader, folderDir);
-                    progressMonitor.setFileName(fileHeader.getFileName());
-                    progressMonitor.setState(1);
-                    progressMonitor.updateWorkCompleted(fileHeader.getCompressedSize());
+                    zipFile.extractFile(fileHeader, folderDir, (UnzipParameters)null, (String)null);
                 }
-
-                progressMonitor.setResult(0);
 
             } catch (ZipException e) {
                 e.printStackTrace();
             }
-        }).start();
 
     }
 
