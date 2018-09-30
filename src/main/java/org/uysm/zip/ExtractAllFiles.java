@@ -40,6 +40,7 @@ public class ExtractAllFiles {
                 // Loop through the file headers
                 for (int i = 0; i < fileHeaderList.size(); i++) {
                     FileHeader fileHeader = (FileHeader) fileHeaderList.get(i);
+                    while(progressMonitor.getState() == progressMonitor.STATE_BUSY){}
                     // Extract the file to the specified destination
                     zipFile.extractFile(fileHeader, folderDir, (UnzipParameters)null, (String)null);
                 }
