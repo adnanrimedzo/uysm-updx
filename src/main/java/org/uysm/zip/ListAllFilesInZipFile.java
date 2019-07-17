@@ -60,10 +60,9 @@ public class ListAllFilesInZipFile {
                 //System.out.println("Hash SHA-256: " + HashCheckSum.getSHA256Hash(is));
                 System.out.println("************************************************************");
 
-                hashBuffer.append(HashCheckSum.getSHA256Hash(is)+"\n");
-
-                // Various other properties are available in FileHeader. Please have a look at FileHeader
-                // class to see all the properties
+//                hashBuffer.append(HashCheckSum.getSHA256Hash(is)+"\n");
+                hashBuffer.append(fileHeader.getFileName().toString()
+                        + " ==> " + HashCheckSum.getSHA256Hash(is) + "\n");
 
                 if (is != null) {
                     is.close(true);

@@ -3,15 +3,13 @@ package org.uysm.hash;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.io.InputStream;
-import javax.xml.bind.DatatypeConverter;
-import java.io.File;
 
 public class HashCheckSum {
 
@@ -49,7 +47,7 @@ public class HashCheckSum {
         while ((read = fis.read(data)) != -1) {
             sha256.update(data, 0, read);
         }
-        ;
+
         byte[] hashBytes = sha256.digest();
 
         StringBuffer sb = new StringBuffer();
@@ -70,7 +68,7 @@ public class HashCheckSum {
         while ((read = fis.read(data)) != -1) {
             sha256.update(data, 0, read);
         }
-        ;
+
         byte[] hashBytes = sha256.digest();
 
         StringBuffer sb = new StringBuffer();

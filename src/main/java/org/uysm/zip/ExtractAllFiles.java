@@ -21,8 +21,6 @@ public class ExtractAllFiles {
 
     public ExtractAllFiles(String UDPXDir, String folderDir, String ecriptionKey) {
             try {
-
-                progressMonitor.setResult(1);
                 // Initiate ZipFile object with the path/name of the zip file.
                 ZipFile zipFile = new ZipFile(UDPXDir);
                 zipFile.setRunInThread(true);
@@ -40,8 +38,9 @@ public class ExtractAllFiles {
                 // Loop through the file headers
                 for (int i = 0; i < fileHeaderList.size(); i++) {
                     FileHeader fileHeader = (FileHeader) fileHeaderList.get(i);
-                    while(progressMonitor.getState() == progressMonitor.STATE_BUSY){}
+                    while(progressMonitor.getState() == progressMonitor.STATE_BUSY){System.out.println(fileHeader.getFileName());}
                     // Extract the file to the specified destination
+                    System.out.println(fileHeader.getFileName());
                     zipFile.extractFile(fileHeader, folderDir, (UnzipParameters)null, (String)null);
                 }
 

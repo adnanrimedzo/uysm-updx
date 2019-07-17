@@ -20,7 +20,7 @@ public class ProgressBar {
 
         bar.append("]   " + percent + "%     ");
         bar.append("    " + message);
-        System.out.print("\r" + bar.toString());
+        //System.out.print("\r" + bar.toString());
     }
 
 }

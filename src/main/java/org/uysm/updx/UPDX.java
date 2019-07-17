@@ -89,19 +89,28 @@ public class UPDX {
     }
 
     public final static boolean validateUPDX(String UDPXDir, String ecriptionKey) throws IOException, NoSuchAlgorithmException {
-        ZipInputStream checkFileOlder = ExtractSingleFile.getSingleFile(VALIDATION_HASH_FILE, UDPXDir,
-                ecriptionKey);
 
-        InputStream checkFileNew = ListAllFilesInZipFile.getListAllFilesInZipFile(UDPXDir, ecriptionKey, VALIDATION_HASH_FILE);
+        ZipInputStream checkFileOlder = null;
+        InputStream checkFileNew = null;
 
-        String hashListFromOlder = IOUtils.toString(checkFileOlder, StandardCharsets.UTF_8.name());
-        String hashListFromNew = IOUtils.toString(checkFileNew, StandardCharsets.UTF_8.name());
+        try {
+            checkFileOlder = ExtractSingleFile.getSingleFile(VALIDATION_HASH_FILE, UDPXDir,
+                    ecriptionKey);
 
-        checkFileOlder.close(true);
-        checkFileNew.close();
+            checkFileNew = ListAllFilesInZipFile.getListAllFilesInZipFile(UDPXDir, ecriptionKey, VALIDATION_HASH_FILE);
 
-        if (hashListFromOlder.equals(hashListFromNew)) {
-            return true;
+            String hashListFromOlder = IOUtils.toString(checkFileOlder, StandardCharsets.UTF_8.name());
+            String hashListFromNew = IOUtils.toString(checkFileNew, StandardCharsets.UTF_8.name());
+
+            if (hashListFromOlder.equals(hashListFromNew)) {
+                return true;
+            }
+
+        }catch (Exception e){
+            //System.out.print(e.getMessage());
+        }finally {
+            if(checkFileOlder != null) checkFileOlder.close(true);
+            if(checkFileNew != null) checkFileNew.close();
         }
 
         return false;
@@ -111,13 +120,18 @@ public class UPDX {
         String folderDirIn = "/Users/adnanrimedzo/IdeaProjects/udpx/src/test/java/resources/input";
         String folderDirExt = "/Users/adnanrimedzo/IdeaProjects/udpx/src/test/java/resources/extract";
         String UDPXDir = "/Users/adnanrimedzo/IdeaProjects/udpx/src/test/java/resources/output/test.updx";
-        String ecriptionKey = "1q2w3e4r1q2w3e4r";
+        String ecriptionKey = "1q2w3e4r5t6y7u8i";
         ProgressMonitor progressMonitor = generateUPDX(folderDirIn, UDPXDir, ecriptionKey);
-        while(progressMonitor.getResult() != 0){
+        while(progressMonitor.getResult() != progressMonitor.RESULT_SUCCESS){
             System.out.println(progressMonitor.getResult());
         }
         System.out.println("fkhdsjfghksd");
-        decodeUPDX(UDPXDir, folderDirExt, ecriptionKey);
+
+        progressMonitor = decodeUPDX(UDPXDir, folderDirExt, ecriptionKey);
+        while(progressMonitor.getResult() != progressMonitor.RESULT_SUCCESS){
+            //System.out.println(progressMonitor.getResult());
+        }
+
         System.out.print(validateUPDX(UDPXDir, ecriptionKey));
     }
 
